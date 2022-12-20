@@ -1,5 +1,5 @@
 # test COCO api
-Simplify [COCO](https://github.com/cocodataset/cocoapi) usage to decode/encode masks and test it to help in developing tasks of python equivalent version.
+Simplify the use of [COCO](https://github.com/cocodataset/cocoapi) to decode/encode masks and test it as an aid to developing the equivalent version of python.
 
 ## Compilation
 ```
