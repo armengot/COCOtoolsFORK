@@ -25,5 +25,6 @@ mask = coco_decode(rlemask)
 plt.imshow(mask)
 plt.show()
 ```
-And _voilà_
+And _voilà_ ...
+
 ![mask example](mask.png)
