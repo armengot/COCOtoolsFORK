@@ -1,6 +1,13 @@
 import numpy as np
 import ctypes
 
+'''
+    coco_decode function was re-written by Marcelo Armengot (C) 2022
+    and is available from: https://github.com/armengot/test_coco_api
+    as derived from C version: https://github.com/cocodataset/cocoapi
+    see license: https://github.com/cocodataset/cocoapi/blob/master/license.txt
+'''
+
 def coco_decode(rlemask):
     masksize = rlemask["size"]
     h = masksize[0]
