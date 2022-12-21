@@ -1,4 +1,4 @@
-# Why re-develope COCO API ?
+# Why re-write COCO API in Python?
 
 [COCO](https://github.com/cocodataset/cocoapi)'s original libraries for encoding and decoding [RLE](https://en.wikipedia.org/wiki/Run-length_encoding) masks were developed in standard C and are commonly used to represent objects detected by neural networks. However, normally there are no problems on Linux to use the original standard Python/API but on Windows you may encounter complaints about pip installing or having to import DLL libraries.
 
