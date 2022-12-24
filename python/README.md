@@ -6,7 +6,7 @@ To avoid all this in a project where I only needed to decode the masks in a Wind
 
 Anyway, thanks to use my version and may the force be with you.
 
-## Encoding
+## standard pycocotools lib encoding
 Usual encoding with standard COCO library (used in this example):
 ```
 compatible_mask = np.asfortranarray(mask,dtype=np.uint8)
@@ -14,7 +14,15 @@ rlemask = encode(compatible_mask)
 rlemask['counts'] = str(rlemask['counts'],'utf-8')
 ```
 
-## Decoding
+## standard pycocotools lib decoding
+Usual decoding with standard COCO library would be something like:
+```
+tmpmask = inputdic["mask"]
+tmpmask["counts"] = bytes(tmpmask["counts"],"utf-8")
+self.mask = decode(tmpmask)
+```
+
+## Decoding with this forkcocowin library
 As [testwin](testwin.py) script shows:
 ```
 from forkcocowin import coco_decode
