@@ -13,11 +13,11 @@ $ ./test
 
 # Encoding/Decoding with standar API
 In the main function there is an example.
-After header includes:
+After header includes ...
 ```
 #include "maskApi.h"
 ```
-And some functions:
+... and some functions (see the code) ... you can find the main():
 ```
 int main()
 {   
