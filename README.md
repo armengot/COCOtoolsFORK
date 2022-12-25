@@ -70,5 +70,4 @@ The two functions in the API:
 ```
 Are traslated to Python in a one only funcion. See the Python folder.
 
-## Speed
-C standard function is faster than the equivalent in Python :(
+
