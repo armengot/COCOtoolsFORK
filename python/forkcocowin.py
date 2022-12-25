@@ -45,10 +45,16 @@ def coco_decode(rlemask):
     v = ctypes.c_byte(0)
     while j<N:
         k = 0
+        # optimization update
+        M[i:i+cnts[j]] = v.value * np.ones(cnts[j]).astype(np.byte)
+        k = k + cnts[j]
+        i = i + cnts[j]
+        '''
         while k<cnts[j]:
             M[i] = v.value
             k = k + 1
             i = i + 1
+        '''
         v.value = not v.value
         j = j + 1
     output = np.reshape(M,(w,h)).astype(np.byte)
