@@ -1,73 +1,38 @@
-# test COCO api
-Simplify the use of [COCO](https://github.com/cocodataset/cocoapi) to decode/encode masks and test it as an aid to developing the equivalent version of python.
+# Why re-write COCO API in Python?
 
-## Compilation
+[COCO](https://github.com/cocodataset/cocoapi)'s original libraries for encoding and decoding [RLE](https://en.wikipedia.org/wiki/Run-length_encoding) masks were developed in standard C and are commonly used to represent objects detected by neural networks. However, normally there are no problems on Linux to use the original standard Python/API but on Windows you may encounter complaints about pip installing or having to import DLL libraries.
+
+To avoid all this in a project where I only needed to decode the masks in a Windows environment, I translated from C to have an equivalent Python version of the decode function. Sorry, if you also need encoding function in Python maybe you could contact me to help and (together) add a compatible encode :smile: function soon.
+
+Anyway, thanks to use my version and may the force be with you.
+
+## standard pycocotools lib encoding
+Usual encoding with standard COCO library (used in this example):
 ```
-gcc -c maskApi.c -o maskapi.o 
-gcc -g -Wall testcocotools.c maskapi.o -o test
-```
-And run:
-```
-$ ./test
+compatible_mask = np.asfortranarray(mask,dtype=np.uint8)
+rlemask = encode(compatible_mask)
+rlemask['counts'] = str(rlemask['counts'],'utf-8')
 ```
 
-# Encoding/Decoding with standar API
-In the main function there is an example.
-After header includes ...
+## standard pycocotools lib decoding
+Usual decoding with standard COCO library would be something like:
 ```
-#include "maskApi.h"
+tmpmask = inputdic["mask"]
+tmpmask["counts"] = bytes(tmpmask["counts"],"utf-8")
+self.mask = decode(tmpmask)
 ```
-... and some functions (see the code) ... you can find the main():
+
+## Decoding with this forkcocowin library
+As [testwin](testwin.py) script shows:
 ```
-int main()
-{   
-    char* output;
-    byte mout[H*W];
-    byte **outmask=NULL;  
-    byte **dmask;
-    byte *mravel;
-    
-    /* ORIGINAL HxW ARRAY */
-    dmask = fillmask(mask,H,W);
-    printf("ORIGINAL ARRAY\n");
-    arrayprint(dmask,H,W);
+from forkcocowin import coco_decode
+import matplotlib.pyplot as plt
 
-    /* Coco Ravel() style */
-    mravel = ravel(mask,H,W);
-
-    /* RLE <== mask[rows][cols] */
-    rleEncode(&encodedmask,mravel,W,H,1);    
-
-    /* RLE->cnts ==> string */
-    output = rleToString(&encodedmask);    
-    printf("RLE:\n");    
-    printf("%s\n",output);
-          
-    /* test string ==> RLE->cnts */
-    printf("\nDECODE:\n");
-    rleFrString(&decodedmask,output,H,W);
-    free(output);
-
-    /* RLE->cnts ==> string */
-    rleDecode(&decodedmask,mout,1);    
-    printf("\n:%d:%d:%d\n",mout[0],mout[1],mout[5]);
-
-    /* test reshape ==> Array2d[Rows][Cols] */
-    outmask = reshape(mout,H,W);     
-    arrayprint(outmask,H,W);
-
-    freemat(outmask,H);    
-    freemat(dmask,H);      
-    rleFree(&encodedmask);
-    rleFree(&decodedmask);
-    return(0);
-}
+rlemask = {'size': [50,70], 'counts': '0g05b08J4M2N2NA^O1`0OCO=0E090H080IO68DH;>@C>a0_O_O`0j0OWOF<:CM72I24NL43JM92FN;1ENKO72L0LO91J0MO92INO0NO122OO0M031O000NO31OO11MO40N011MO41MO21L06OL021L06OL021L06OL021L060J040L060J040L060J040L060J040L060J040L060J040L060KO31L060KO31L06OL021L06OL021L06OL021MO41MO21MO40N100NO310O00M0310O00NO1220NO92IONO91KOMO72M0<1EO:2GN63KM34OLM73JF<;=1G_O_Ob0=AC`07EH=1IO71H090F0:1DO>1_O1b0>2N2N3L6H]O'}
+mask = coco_decode(rlemask)
+plt.imshow(mask)
+plt.show()
 ```
-The two functions in the API:
-```
-    rleFrString(&decodedmask,output,H,W);
-    rleDecode(&decodedmask,mout,1);  
-```
-Are traslated to Python in a one only funcion. See the Python folder.
+And _voilà_ ...
 
-
+![mask example](mask.png)
