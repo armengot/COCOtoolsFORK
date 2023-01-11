@@ -1,5 +1,5 @@
 # test COCO api
-Simplify the use of [COCO](https://github.com/cocodataset/cocoapi) to decode/encode masks and test it as an aid to developing the equivalent version of python.
+Simplify the use from [COCO](https://github.com/cocodataset/cocoapi) to decode/encode masks and test it as an aid to developing the equivalent version of python.
 
 ## Compilation
 ```
@@ -50,7 +50,6 @@ int main()
 
     /* RLE->cnts ==> string */
     rleDecode(&decodedmask,mout,1);    
-    printf("\n:%d:%d:%d\n",mout[0],mout[1],mout[5]);
 
     /* test reshape ==> Array2d[Rows][Cols] */
     outmask = reshape(mout,H,W);     
@@ -63,11 +62,17 @@ int main()
     return(0);
 }
 ```
-The two functions in the API:
+Functions translated in a one only function (see the parent folder):
+
+coco_decode()
 ```
     rleFrString(&decodedmask,output,H,W);
     rleDecode(&decodedmask,mout,1);  
 ```
-Are traslated to Python in a one only funcion. See the Python folder.
+coco_encode()
+```
+    rleEncode(&encodedmask,mravel,W,H,1);    
+    output = rleToString(&encodedmask);  
+```
 
 
