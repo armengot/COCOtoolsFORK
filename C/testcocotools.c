@@ -172,7 +172,6 @@ int main()
 
     /* RLE->cnts ==> string */
     rleDecode(&decodedmask,mout,1);    
-    printf("\n:%d:%d:%d\n",mout[0],mout[1],mout[5]);
 
     /* test reshape ==> Array2d[Rows][Cols] */
     outmask = reshape(mout,H,W);     
