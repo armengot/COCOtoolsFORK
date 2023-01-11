@@ -26,7 +26,7 @@ tmpmask["counts"] = bytes(tmpmask["counts"],"utf-8")
 self.mask = decode(tmpmask)
 ```
 
-## Decoding with this forkcocowin library
+## Decoding and encoding with this forkcocowin library
 As [testwin](testwin.py) script shows:
 ```
 from forkcocowin import coco_decode, coco_encode
