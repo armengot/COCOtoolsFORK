@@ -23,7 +23,7 @@ Usual decoding with standard COCO library would be something like:
 ```
 tmpmask = inputdic["mask"]
 tmpmask["counts"] = bytes(tmpmask["counts"],"utf-8")
-self.mask = decode(tmpmask)
+mask = decode(tmpmask)
 ```
 
 ## Decoding and encoding with this forkcocowin library

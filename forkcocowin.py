@@ -65,7 +65,7 @@ def coco_decode(rlemask):
         v.value = not v.value
         j = j + 1
     output = np.reshape(M,(w,h)).astype(np.byte)
-    return(output.transpose())
+    return(output.transpose().astype(np.uint8))
 
 def coco_encode(mask):
     w = mask.shape[0]
@@ -79,7 +79,7 @@ def coco_encode(mask):
     j = 0
     k = 0
     p = ctypes.c_byte(0)
-    c = ctypes.c_byte(0)
+    c = ctypes.c_uint32(0)
     while j<a:
         if (M[j]!=p.value):
             cnts[k] = c.value
@@ -102,7 +102,7 @@ def coco_encode(mask):
             x.value = x.value - ctypes.c_long(cnts[i-2]).value
         more = 1
         while (more):
-            c.value = x.value & (0x1f)
+            c = ctypes.c_byte(x.value & (0x1f))
             x.value >>= 5
             if (c.value & ctypes.c_byte(0x10).value):
                 more = x.value!=-1

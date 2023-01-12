@@ -75,4 +75,7 @@ coco_encode()
     output = rleToString(&encodedmask);  
 ```
 
+## Last commit
+
+I added another usage example in [testjson.c](testjson.c) for debugging tasks of last commit (types in Python version) that cause encoding problems in big images.
 
