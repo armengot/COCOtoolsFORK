@@ -81,7 +81,6 @@ def coco_encode(mask):
     p = ctypes.c_byte(0)
     c = ctypes.c_uint32(0)
     # faster review
-    '''
     while True: # S<a:
         nextblock = np.where(M[j::]!=p.value)[0]
         if len(nextblock)==0:
@@ -92,10 +91,10 @@ def coco_encode(mask):
         j = j + c.value
         k = k + 1
         p.value = M[j]
-
     cnts[k] = np.uint32(a-j)
-    '''
+
     # slower (in Python) literal translation from original COCO C source code
+    '''
     while j<a:
         if (M[j]!=p.value):
             cnts[k] = c.value
@@ -106,6 +105,7 @@ def coco_encode(mask):
         j = j + 1  
     print(cnts[k])  
     cnts[k] = c.value
+    '''
 
     # rleToString() translation
     i = 0
