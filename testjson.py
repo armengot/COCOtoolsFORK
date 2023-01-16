@@ -65,4 +65,3 @@ tv.imshow(RGB)
 tv.set_xticks([])
 tv.set_yticks([])
 plt.show()
-
